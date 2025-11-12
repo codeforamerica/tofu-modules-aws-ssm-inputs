@@ -3,8 +3,9 @@
 [![Main Checks][badge-checks]][code-checks] [![GitHub Release][badge-release]][latest-release]
 
 This module provides an interface for retrieving input parameters from AWS
-Systems Manager (SSM) Parameter Store. It allows you to easily manage and access
-configuration parameters stored in SSM.
+Systems Manager (SSM) Parameter Store. Along with the [aws_ssm_outputs] module,
+it allows you to easily manage and access configuration parameters stored in
+SSM.
 
 ## Usage
 
@@ -20,7 +21,7 @@ module "module_name" {
   source = "github.com/codeforamerica/tofu-modules-aws-ssm-inputs?ref=1.0.0"
 
   prefix = "/my-project/environment"
-  inputs = ["vpc/id", "vpc/private-subnets", "logging/key"]
+  inputs = ["logging/key", "vpc/id", "vpc/private-subnets"]
 }
 ```
 
@@ -56,6 +57,7 @@ tofu init -upgrade
 Follow the [contributing guidelines][contributing] to contribute to this
 repository.
 
+[aws_ssm_outputs]: https://github.com/codeforamerica/tofu-modules-aws-ssm-outputs
 [badge-checks]: https://github.com/codeforamerica/tofu-modules-aws-ssm-inputs/actions/workflows/main.yaml/badge.svg
 [badge-release]: https://img.shields.io/github/v/release/codeforamerica/tofu-modules-aws-ssm-inputs?logo=github&label=Latest%20Release
 [code-checks]: https://github.com/codeforamerica/tofu-modules-aws-ssm-inputs/actions/workflows/main.yaml
