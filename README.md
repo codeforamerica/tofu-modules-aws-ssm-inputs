@@ -1,33 +1,27 @@
-# Code for America OpenTofu Module Template
+# AWS SSM Inputs Module
 
 [![Main Checks][badge-checks]][code-checks] [![GitHub Release][badge-release]][latest-release]
 
-Use this template repository to create new OpenTofu modules. Follow the steps
-below to use this repository:
-
-1. Click the "Use this template" button to create a new repository
-1. Name your new repository using the format `todu-modules-<provider>-<module>`
-1. Add the files necessary to support your module to the root of your new
-   repository
-1. Update the `README.md` file with the appropriate information for your module.
-   Make sure you update any references to this template repository with your new
-   repository
-1. Update the [codeforamerica/tofu-modules][tofu-modules] repository to include
-   your new module in the main `README.md` and the documentation
+This module provides an interface for retrieving input parameters from AWS
+Systems Manager (SSM) Parameter Store. Along with the [aws_ssm_outputs] module,
+it allows you to easily manage and access configuration parameters stored in
+SSM.
 
 ## Usage
+
+> [!WARNING]
+> The values looked up by this module are assumed to be insecure. Care should be
+> used when using the values retrieved by this module in secure contexts.
 
 Add this module to your `main.tf` (or appropriate) file and configure the inputs
 to match your desired configuration. For example:
 
-[//]: # (TODO: Update to match your module's name and inputs)
-
 ```hcl
 module "module_name" {
-  source = "github.com/codeforamerica/tofu-modules-template?ref=1.0.0"
+  source = "github.com/codeforamerica/tofu-modules-aws-ssm-inputs?ref=1.0.0"
 
-  project = "my-project"
-  environment = "development"
+  prefix = "/my-project/environment"
+  inputs = ["logging/key", "vpc/id", "vpc/private-subnets"]
 }
 ```
 
@@ -46,21 +40,16 @@ tofu init -upgrade
 
 ## Inputs
 
-[//]: # (TODO: Replace the following with your own inputs)
-
-| Name        | Description                                   | Type     | Default | Required |
-|-------------|-----------------------------------------------|----------|---------|----------|
-| project     | Name of the project.                          | `string` | n/a     | yes      |
-| environment | Environment for the project.                  | `string` | `"dev"` | no       |
-| tags        | Optional tags to be applied to all resources. | `list`   | `[]`    | no       |
+| Name   | Description                                                         | Type     | Default | Required |
+|--------|---------------------------------------------------------------------|----------|---------|----------|
+| inputs | List of parameters to be read.                                      | `list`   | `"dev"` | yes      |
+| prefix | Prefix for all parameters. Should start with a forward slash (`/`). | `string` | `null`  | no       |
 
 ## Outputs
 
-[//]: # (TODO: Replace the following with your own outputs)
-
-| Name     | Description                       | Type     |
-|----------|-----------------------------------|----------|
-| id       | Id of the newly created resource. | `string` |
+| Name   | Description                                   | Type  |
+|--------|-----------------------------------------------|-------|
+| values | Map of retrieved parameters and their values. | `map` |
 
 
 ## Contributing
@@ -68,9 +57,9 @@ tofu init -upgrade
 Follow the [contributing guidelines][contributing] to contribute to this
 repository.
 
-[badge-checks]: https://github.com/codeforamerica/tofu-modules-template/actions/workflows/main.yaml/badge.svg
-[badge-release]: https://img.shields.io/github/v/release/codeforamerica/tofu-modules-template?logo=github&label=Latest%20Release
-[code-checks]: https://github.com/codeforamerica/tofu-modules-template/actions/workflows/main.yaml
+[aws_ssm_outputs]: https://github.com/codeforamerica/tofu-modules-aws-ssm-outputs
+[badge-checks]: https://github.com/codeforamerica/tofu-modules-aws-ssm-inputs/actions/workflows/main.yaml/badge.svg
+[badge-release]: https://img.shields.io/github/v/release/codeforamerica/tofu-modules-aws-ssm-inputs?logo=github&label=Latest%20Release
+[code-checks]: https://github.com/codeforamerica/tofu-modules-aws-ssm-inputs/actions/workflows/main.yaml
 [contributing]: CONTRIBUTING.md
-[latest-release]: https://github.com/codeforamerica/tofu-modules-template/releases/latest
-[tofu-modules]: https://github.com/codeforamerica/tofu-modules
+[latest-release]: https://github.com/codeforamerica/tofu-modules-aws-ssm-inputs/releases/latest
